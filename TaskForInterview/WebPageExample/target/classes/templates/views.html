@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+ 	<style>
+		 .alphabet-link {
+			 padding-left: 14px;
+			 padding-right: 14px;
+		 }
+		 
+		 @media (max-width: 576px) {
+			.col-lg-3 {
+	    		flex: 0 0 75%;
+    			max-width: 75%;
+			}
+		}
+		@media (min-width: 576px) {
+			.col-lg-3 {
+	    		flex: 0 0 45%;
+    			max-width: 45%;
+			}
+		}
+		@media (min-width: 768px) {
+			.col-lg-3 {
+	    		flex: 0 0 30%;
+    			max-width: 30%;
+			}
+		}
+		 @media (min-width: 992px) {
+			.col-lg-3 {
+	    		flex: 0 0 23%;
+    			max-width: 23%;
+			}
+		}
+	 </style>
+  </head>
+  
+    <div class="container">
+			<div class="row" style="margin-bottom: 20px;">
+				<a href="#" class="alphabet-link">ALL</a>
+				<span> | </span>
+				<a href="#" class="alphabet-link">A</a>
+				<span> | </span>
+				<a href="#" class="alphabet-link">B</a>
+				<span> | </span>
+				<a href="#" class="alphabet-link">C</a>
+				<span> | </span>
+				<a href="#" class="alphabet-link">D</a>
+				<span> | </span>
+				<a href="#" class="alphabet-link">E</a>
+				<span> | </span>
+				<a href="#" class="alphabet-link">F</a>
+				<span> | </span>
+				<a href="#" class="alphabet-link">G</a>
+				<span> | </span>
+				<a href="#" class="alphabet-link">H</a>
+				<span> | </span>
+				<a href="#" class="alphabet-link">I</a>
+				<span> | </span>
+				<a href="#" class="alphabet-link">J</a>
+				<span> | </span>
+				<a href="#" class="alphabet-link">K</a>
+				<span> | </span>
+				<a href="#" class="alphabet-link">L</a>
+				<span> | </span>
+				<a href="#" class="alphabet-link">M</a>
+				<span> | </span>
+				<a href="#" class="alphabet-link">N</a>
+				<span> | </span>
+				<a href="#" class="alphabet-link">O</a>
+				<span> | </span>
+				<a href="#" class="alphabet-link">P</a>
+				<span> | </span>
+				<a href="#" class="alphabet-link">Q</a>
+				<span> | </span>
+				<a href="#" class="alphabet-link">R</a>
+				<span> | </span>
+				<a href="#" class="alphabet-link">S</a>
+				<span> | </span>
+				<a href="#" class="alphabet-link">T</a>
+				<span> | </span>
+				<a href="#" class="alphabet-link">U</a>
+				<span> | </span>
+				<a href="#" class="alphabet-link">V</a>
+				<span> | </span>
+				<a href="#" class="alphabet-link">W</a>
+				<span> | </span>
+				<a href="#" class="alphabet-link">X</a>
+				<span> | </span>
+				<a href="#" class="alphabet-link">Y</a>
+				<span> | </span>
+				<a href="#" class="alphabet-link">Z</a>
+				<span> | </span>	
+			</div>
+			<nav class="container-fluid navbar navbar-expand-sm">
+				<div class="collapse navbar-collapse" id="navbarNav"></div>
+			<div class="custom-control custom-switch">
+				<input type="checkbox" class="custom-control-input" id="customSwitches">
+				<label class="custom-control-label" for="customSwitches">DESC</label>
+			</div>
+			</nav>
+		</div>
+    <div class="container">
+			<div class="row customerContainer" >
+			</div>
+		</div>
+	  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.3/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+    <script>
+    
+      $(document).ready(function() {
+        var sharedData;
+        $.ajax({
+          type: "GET",
+         url: "/details",
+          dataType: "json",
+          success: function(data) {
+            sharedData = data;
+            //displayData(data);
+          filterList('All')
+            
+          },
+          error: function() {
+            console.log("Error occurred while fetching data.");
+          }
+        });
+        
+        function filterList(alphabet) {
+			console.log("123e456789"+alphabet);
+			console.log(sharedData);
+			var customerContainer=$(".customerContainer");
+			customerContainer.empty();
+            if (sharedData) {
+				var startsWith=sharedData;
+				startsWith=startsWith.sort(function(a, b) {
+  				// You can modify this comparison logic based on your sorting criteria
+  			return a.username .localeCompare(b.username); // Sorting by age in ascending order
+			});
+				if(alphabet.length==1)
+				{
+                console.log('alphabet ', alphabet);
+               startsWith = sharedData.filter(data => data.username.startsWith(alphabet));
+                
+				}else if(alphabet==true)
+				{
+					console.log("hiiii");
+					startsWith=startsWith.sort(function(a, b) {
+  				// You can modify this comparison logic based on your sorting criteria
+  			return b.username .localeCompare(a.username); // Sorting by age in ascending order
+			});				}
+			console.log(startsWith);
+			if(startsWith.length==0){
+				var cardHtml=`
+				<div class="container">
+    <div class="row justify-content-center mt-5">
+      <div class="col-12 text-center">
+        <strong class="display-4">
+      	SORRY! No Results
+        </strong>
+      </div>
+    </div>
+  </div>`;
+   customerContainer.append(cardHtml);
+				
+				console.log("no element");
+			}else{
+				
+				startsWith.forEach(function(customer) {
+                 cardHtml = `
+                     <div class="card col-lg-3 mb-4" style="border-radius: 10px; padding: 0px; margin-right: 20px;">
+                         <img src="data:image/jpeg;base64,${customer.image}" class="card-img-top" alt="Image" style="height: 200px; border-top-left-radius: 10px; border-top-right-radius: 10px;">
+                         <div class="card-body">
+                             <h5 class="card-title">${customer.username}</h5>
+                             <p>${customer.userAddress}</p></div>`
+                             
+                             cardHtml+=`<div class="card-footer" style="border: 0px; background-color: white;"><p>O:${customer.phone1}</p>`
+                             if (customer.phone2) {
+								 cardHtml += `<p>M:${customer.phone2}</p>`
+							 }
+                             
+                             cardHtml += `<p>${customer.userMail}</p>
+                     </div></div>
+                 </div>`;
+                 
+                customerContainer.append(cardHtml);
+                console.log('startsWith', startsWith);
+             });
+            } }else {
+                console.log("Data is not available yet.");
+            }
+        }
+
+        $(".alphabet-link").click(function() {
+            var selectedAlphabet = $(this).text();
+            filterList(selectedAlphabet);
+        });
+        $('#customSwitches').change(function() {
+  			console.log('checking IDE', $('#customSwitches').prop('checked'));
+  			filterList($('#customSwitches').prop('checked'));
+  			
+		});
+    });
+</script></body>
+</html>
